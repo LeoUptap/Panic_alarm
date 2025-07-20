@@ -23,7 +23,7 @@ def crear_usuario(usuario: User):
 
 ###GET user con id
 @router.get("/users/{user_id}", response_model=User)
-def get_user(user_id: int, session: Session = Depends(get_session())):
+def get_user(user_id: int, session: Session = Depends(get_session)):
     user = session.get(User, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
@@ -32,7 +32,7 @@ def get_user(user_id: int, session: Session = Depends(get_session())):
 
 ###GET user asosiados a un usuario
 @router.get("/users/by-main/{main_user_id}", response_model=List[User])
-def get_sub_users(main_user_id: int, session: Session =Depends(get_session())):
+def get_sub_users(main_user_id: int, session: Session =Depends(get_session)):
     # Consulta para obtener todos los usuarios con ese main_user_id
     statement = select(User).where(User.main_user_id == main_user_id)
     results = session.exec(statement).all()
