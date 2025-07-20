@@ -45,7 +45,7 @@ def get_sub_users(main_user_id: int, session: Session =Depends(get_session)):
 
 # DELETE user
 @router.delete("/users/{user_id}")
-def delete_user(user_id: int, session: Session = get_session()):
+def delete_user(user_id: int, session: Session =Depends(get_session)):
     user = session.get(User, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
