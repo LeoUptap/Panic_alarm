@@ -16,12 +16,6 @@ def crear_usuario(usuario: User):
         session.refresh(usuario)
         return usuario
 
-
-##GET users
-@router.get("/users", response_model=list[User])
-def listar_usuarios():
-    with Session(engine) as session:
-        return session.exec(select(User)).all()
     
 
 
