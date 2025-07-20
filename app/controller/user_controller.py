@@ -1,13 +1,14 @@
 from fastapi import APIRouter, HTTPException
 from sqlmodel import Session, select
 from database import engine
-from models.user import User
+from model.user import User
+from app.database import get_session
 
 router = APIRouter()
 
 
 ##POST user
-@router.post("/", response_model=User)
+@router.post("/users", response_model=User)
 def crear_usuario(usuario: User):
     with Session(engine) as session:
         session.add(usuario)
@@ -17,7 +18,7 @@ def crear_usuario(usuario: User):
 
 
 ##GET users
-@router.get("/", response_model=list[User])
+@router.get("/users", response_model=list[User])
 def listar_usuarios():
     with Session(engine) as session:
         return session.exec(select(User)).all()

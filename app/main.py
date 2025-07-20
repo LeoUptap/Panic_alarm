@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from database import engine
+from database import engine,create_db_and_tables
 from sqlmodel import SQLModel
 
 from controller.user_controller import router as user_router
@@ -7,6 +7,8 @@ from controller.user_controller import router as user_router
 #from controller.emergency_controller import router as emergency_router
 
 app = FastAPI()
+
+create_db_and_tables()
 
 @app.on_event("startup")
 def on_startup():
