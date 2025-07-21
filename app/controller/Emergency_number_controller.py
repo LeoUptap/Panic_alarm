@@ -30,7 +30,7 @@ def get_nums(main_user_id: int, session: Session =Depends(get_session)):
 
 
 @router.delete("/emergency_num/{num_id}")
-def delete_user(num_id: int, session: Session =Depends(get_session)):
+def delete_number(num_id: int, session: Session =Depends(get_session)):
     num = session.get(Emergency_number, num_id)
     if not num:
         raise HTTPException(status_code=404, detail="User not found")
@@ -42,7 +42,7 @@ def delete_user(num_id: int, session: Session =Depends(get_session)):
 
 ###PUT (Actualizar) numero
 @router.put("/emergency_num/{num_id}")
-def update_user(num_id: int, updated_num: Emergency_number, session: Session = Depends(get_session)):
+def update_number(num_id: int, updated_num: Emergency_number, session: Session = Depends(get_session)):
     num = session.get(Emergency_number, num_id)
     if not num:
         raise HTTPException(status_code=404, detail="Number not found")
