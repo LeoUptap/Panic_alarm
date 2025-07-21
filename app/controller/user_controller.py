@@ -1,23 +1,25 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlmodel import Session, select
-from database import engine
-from model.user import User
-from database import get_session
+from Database import engine
+from model.User import User
+from Database import get_session
 from typing import List
 
 
 router = APIRouter()
 
-
-##POST user
+    
 @router.post("/users", response_model=User)
-def crear_usuario(usuario: User):
-    with Session(engine) as session:
-        session.add(usuario)
-        session.commit()
-        session.refresh(usuario)
-        return usuario
+def create_user(user: User, session: Session = Depends(get_session)):
+    # Verifica si el username ya existe
+    existing_user = session.exec(select(User).where(User.username == user.username)).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="El usuario ya existe :/")
 
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+    return user
     
 
 
@@ -53,3 +55,25 @@ def delete_user(user_id: int, session: Session =Depends(get_session)):
     session.delete(user)
     session.commit()
     return {"message": f"User {user_id} deleted successfully"}
+
+
+###PUT (Actualizar) user
+@router.put("/users/{user_id}")
+def update_user(user_id: int, updated_user: User, session: Session = get_session()):
+    user = session.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Actualiza solo campos que vienen con valor (opcional)
+    user.name = updated_user.name
+    user.user_name = updated_user.user_name
+    user.password = updated_user.password
+    user.main_phone_number = updated_user.main_phone_number
+    user.type = updated_user.type
+    user.main_user_id = updated_user.main_user_id
+
+    session.add(user)
+    session.commit()
+    session.refresh(user)
+
+    return user

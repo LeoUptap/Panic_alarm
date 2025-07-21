@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from database import engine,create_db_and_tables
+from Database import engine,create_db_and_tables
 from sqlmodel import SQLModel
 
 from controller.user_controller import router as user_router
