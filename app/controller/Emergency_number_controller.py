@@ -41,7 +41,7 @@ def delete_user(num_id: int, session: Session =Depends(get_session)):
 
 
 ###PUT (Actualizar) numero
-@router.put("/users/{num_id}")
+@router.put("/emergency_num/{num_id}")
 def update_user(num_id: int, updated_num: Emergency_number, session: Session = Depends(get_session)):
     num = session.get(Emergency_number, num_id)
     if not num:
