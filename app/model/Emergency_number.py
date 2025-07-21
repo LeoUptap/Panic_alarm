@@ -1,7 +1,6 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional
-from User import User
-
+from model.User import User
 
 class Emergency_number(SQLModel, table=True):
     id:int = Field(default=None, primary_key=True)

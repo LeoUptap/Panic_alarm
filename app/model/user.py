@@ -1,7 +1,7 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, List
-from Emergency_number import Emergency_number
-from Location import Location
+from model.Emergency_number import Emergency_number
+from model.Location import Location
 
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
