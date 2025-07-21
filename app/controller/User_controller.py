@@ -59,7 +59,7 @@ def delete_user(user_id: int, session: Session =Depends(get_session)):
 
 ###PUT (Actualizar) user
 @router.put("/users/{user_id}")
-def update_user(user_id: int, updated_user: User, session: Session = get_session()):
+def update_user(user_id: int, updated_user: User, session: Session = Depends(get_session)):
     user = session.get(User, user_id)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
