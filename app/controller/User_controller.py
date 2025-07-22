@@ -34,7 +34,8 @@ def get_user(user_id: int, session: Session = Depends(get_session)):
 
 @router.get("/users_name/{user_name}", response_model=User)
 def get_user_byusername(user_name: str, session: Session = Depends(get_session)):
-    user = session.get(User, user_name)
+    statement = select(User).where(User.user_name == user_name)
+    user=session.exec(statement).all()
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
