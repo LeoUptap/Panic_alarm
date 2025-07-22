@@ -73,7 +73,7 @@ def get_fresh_locations(user_id: int, session: Session =Depends(get_session)):
         .order_by(Location_esp.day.desc(),Location_esp.time.desc())
         .limit(1)
         )
-    results = session.exec(statement).all()
+    results = session.exec(statement).first()
 
     if not results:
         raise HTTPException(status_code=404, detail="No se encontro una ubicaion para este usuario")
