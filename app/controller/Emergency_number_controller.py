@@ -57,3 +57,13 @@ def update_number(num_id: int, updated_num: Emergency_number, session: Session =
 
     return num
 
+@router.get("/only_emergency_num/{main_user_id}", response_model=List[Emergency_number])
+def get_only_nums(main_user_id: int, session: Session =Depends(get_session)):
+    # Consulta para obtener todos los contactos de emegencia con ese main_user_id
+    statement = select(Emergency_number.phone_number).where(Emergency_number.user_id == main_user_id)
+    results = session.exec(statement).all()
+
+    if not results:
+        raise HTTPException(status_code=404, detail="No users found for given main_user_id")
+    
+    return results
