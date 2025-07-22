@@ -17,4 +17,5 @@ def on_startup():
 # Registrar routers
 app.include_router(user_router, prefix="/users", tags=["Users"])
 app.include_router(location_router, prefix="/locations", tags=["Locations"])
+app.include_router(location_router, prefix="/locations_esp", tags=["Locations_esp"])
 app.include_router(emergency_router, prefix="/emergencies", tags=["Emergency Numbers"])
