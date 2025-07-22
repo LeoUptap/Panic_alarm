@@ -2,6 +2,8 @@ from __future__ import annotations
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional
 from datetime import date, time
+from sqlalchemy.orm import Mapped
+
 class Location(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     user_id: Optional[int] = Field(default=None, foreign_key="user.id")
@@ -11,4 +13,5 @@ class Location(SQLModel, table=True):
     day: date
     time: time
 
-    user: Optional[User] = Relationship(back_populates="locations")
+    user: Mapped[Optional["User"]] = Relationship(back_populates="locations")
+

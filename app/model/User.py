@@ -2,6 +2,8 @@ from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, List
 from model.Emergency_number import Emergency_number
 from model.Location import Location
+from sqlalchemy.orm import Mapped
+
 
 class User(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
@@ -14,7 +16,13 @@ class User(SQLModel, table=True):
     name: str
 
     # Relaciones
-    locations: List["Location"] = Relationship(back_populates="user")
-    emergency_numbers: List["Emergency_number"] = Relationship(back_populates="user")
-    sub_users: List["User"] = Relationship(back_populates="main_user", sa_relationship_kwargs={"foreign_keys": "[User.main_user_id]"})
-    main_user: Optional["User"] = Relationship(back_populates="sub_users", sa_relationship_kwargs={"remote_side": "[User.id]"})
+    locations: Mapped[List["Location"]] = Relationship(back_populates="user")
+    emergency_numbers: Mapped[List["Emergency_number"]] = Relationship(back_populates="user")
+    sub_users: Mapped[List["User"]] = Relationship(
+        back_populates="main_user",
+        sa_relationship_kwargs={"foreign_keys": "User.main_user_id"}
+    )
+    main_user: Mapped[Optional["User"]] = Relationship(
+        back_populates="sub_users",
+        sa_relationship_kwargs={"remote_side": "User.id"}
+    )
