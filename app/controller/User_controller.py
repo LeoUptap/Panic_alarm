@@ -12,7 +12,7 @@ router = APIRouter()
 @router.post("/users", response_model=User)
 def create_user(user: User, session: Session = Depends(get_session)):
     # Verifica si el username ya existe
-    existing_user = session.exec(select(User).where(User.username == user.username)).first()
+    existing_user = session.exec(select(User).where(User.user_name == user.user_name)).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="El usuario ya existe :/")
 
@@ -27,6 +27,14 @@ def create_user(user: User, session: Session = Depends(get_session)):
 @router.get("/users/{user_id}", response_model=User)
 def get_user(user_id: int, session: Session = Depends(get_session)):
     user = session.get(User, user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user
+
+
+@router.get("/users/{user_name}", response_model=User)
+def get_user_byusername(user_name: int, session: Session = Depends(get_session)):
+    user = session.get(User, user_name)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     return user
