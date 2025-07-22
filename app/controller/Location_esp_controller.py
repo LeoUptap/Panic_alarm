@@ -64,7 +64,7 @@ def update_location(loc_id: int, updated_loc: Location_esp, session: Session = D
 
 
 ###GET Localizacion reciente del usuario
-@router.get("/location_esp/fresh_location/{main_user_id}", response_model=List[Location_esp])
+@router.get("/location_esp/fresh_location/{main_user_id}", response_model=Location_esp)
 def get_fresh_locations(user_id: int, session: Session =Depends(get_session)):
     # Consulta para obtener todos los contactos de emegencia con ese main_user_id
     statement = (
