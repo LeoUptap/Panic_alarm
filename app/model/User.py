@@ -2,6 +2,7 @@ from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional, List
 from model.Emergency_number import Emergency_number
 from model.Location import Location
+from model.Location_esp import Location_esp
 from sqlalchemy.orm import Mapped
 
 
@@ -20,6 +21,8 @@ class User(SQLModel, table=True):
 
 
     locations: Mapped[List["Location"]] = Relationship()
+    locations_esp: Mapped[List["Location_esp"]] = Relationship()
+
     sub_users: Mapped[List["User"]] = Relationship(
         back_populates="main_user",
         sa_relationship_kwargs={"foreign_keys": "User.main_user_id"}

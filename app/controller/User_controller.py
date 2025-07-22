@@ -32,7 +32,7 @@ def get_user(user_id: int, session: Session = Depends(get_session)):
     return user
 
 
-@router.get("/users/{user_name}", response_model=User)
+@router.get("/users_name/{user_name}", response_model=User)
 def get_user_byusername(user_name: int, session: Session = Depends(get_session)):
     user = session.get(User, user_name)
     if not user:
