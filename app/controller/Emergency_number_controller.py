@@ -57,7 +57,7 @@ def update_number(num_id: int, updated_num: Emergency_number, session: Session =
 
     return num
 
-@router.get("/only_emergency_num/{main_user_id}", response_model=List[Emergency_number])
+@router.get("/only_emergency_num/{main_user_id}", response_model=List[Emergency_number.phone_number])
 def get_only_nums(main_user_id: int, session: Session =Depends(get_session)):
     # Consulta para obtener todos los contactos de emegencia con ese main_user_id
     statement = select(Emergency_number.phone_number).where(Emergency_number.user_id == main_user_id)
