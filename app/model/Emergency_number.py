@@ -1,7 +1,6 @@
 from __future__ import annotations
-from sqlmodel import SQLModel, Field, Relationship
+from sqlmodel import SQLModel, Field
 from typing import Optional
-from sqlalchemy.orm import Mapped
 
 
 class Emergency_number(SQLModel, table=True):
@@ -10,4 +9,3 @@ class Emergency_number(SQLModel, table=True):
     
     phone_number: str
     name: str
-    user: Mapped[Optional["User"]] = Relationship(back_populates="emergency_numbers")

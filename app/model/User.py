@@ -16,8 +16,10 @@ class User(SQLModel, table=True):
     name: str
 
     # Relaciones
-    locations: Mapped[List["Location"]] = Relationship(back_populates="user")
-    emergency_numbers: Mapped[List["Emergency_number"]] = Relationship(back_populates="user")
+    emergency_numbers: Mapped[List["Emergency_number"]] = Relationship()
+
+
+    locations: Mapped[List["Location"]] = Relationship()
     sub_users: Mapped[List["User"]] = Relationship(
         back_populates="main_user",
         sa_relationship_kwargs={"foreign_keys": "User.main_user_id"}
